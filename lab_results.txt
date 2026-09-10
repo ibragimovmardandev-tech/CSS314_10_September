@@ -1,0 +1,101 @@
+TASK 1 - HOST SILICON AUDIT
+
+CPU Model: 12th Gen Intel(R) Core(TM) i7-12700H
+Architecture: AMD64
+Physical Cores: 14
+Logical Cores: 20
+Current Clock: 2300 MHz
+L2 Cache: 11776 KB
+L3 Cache: 24576 KB
+OS: Microsoft Windows 11 Pro
+OS Version: 10.0.26200
+
+
+TASK 2 - MULTI-THREAD SCALING BENCHMARK
+
+Workload: Count prime numbers from 2 to 5,000,000
+Language & Runtime: C# / .NET Threads
+
+N=1
+Run 1: 0.4622 s
+Run 2: 0.4477 s
+Run 3: 0.4494 s
+Avg: 0.4531 s
+Speedup: 1.000x
+Efficiency: 100.0%
+
+N=2
+Run 1: 0.2791 s
+Run 2: 0.4740 s
+Run 3: 0.5344 s
+Avg: 0.4292 s
+Speedup: 1.056x
+Efficiency: 52.8%
+
+N=4
+Run 1: 0.3050 s
+Run 2: 0.2770 s
+Run 3: 0.2764 s
+Avg: 0.2861 s
+Speedup: 1.584x
+Efficiency: 39.6%
+
+N=8
+Run 1: 0.1639 s
+Run 2: 0.1650 s
+Run 3: 0.1434 s
+Avg: 0.1574 s
+Speedup: 2.878x
+Efficiency: 36.0%
+
+N=16
+Run 1: 0.1221 s
+Run 2: 0.1218 s
+Run 3: 0.1212 s
+Avg: 0.1217 s
+Speedup: 3.723x
+Efficiency: 23.3%
+
+N=32
+Run 1: 0.0948 s
+Run 2: 0.0913 s
+Run 3: 0.0961 s
+Avg: 0.0940 s
+Speedup: 4.819x
+Efficiency: 15.1%
+
+
+TASK 3 - UNSYNCHRONIZED SHARED COUNTER
+
+Expected Total: 10,000,000
+
+Run #1: 3,574,653 | Error: 6,425,347
+Run #2: 3,819,501 | Error: 6,180,499
+Run #3: 3,723,682 | Error: 6,276,318
+Run #4: 3,594,660 | Error: 6,405,340
+Run #5: 3,889,304 | Error: 6,110,696
+Run #6: 4,619,426 | Error: 5,380,574
+Run #7: 3,702,599 | Error: 6,297,401
+Run #8: 3,835,228 | Error: 6,164,772
+Run #9: 4,914,044 | Error: 5,085,956
+Run #10: 4,462,805 | Error: 5,537,195
+
+Unlocked: 2.97 ms
+Unlocked Result: 4,973,930
+
+Locked: 373.66 ms
+Locked Result: 10,000,000
+
+
+TASK 4 - AMDAHL & GUSTAFSON
+
+T1 = 0.453092 s
+T2 = 0.429202 s
+
+p = 0.105453
+
+Sequential Fraction (1-p) = 0.894547
+
+Amdahl Smax = 1.118x
+Amdahl S64 = 1.116x
+Gustafson S64 = 7.644x
