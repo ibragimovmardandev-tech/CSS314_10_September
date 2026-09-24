@@ -1,0 +1,10 @@
+student_id=230103054
+N=13054000
+physical_cores=14
+logical_threads=20
+T_seq=4.218500018
+S2=1.043150343
+p=0.082730823
+checksum=62455498
+max_steps=688
+hits_gt_100=10516340

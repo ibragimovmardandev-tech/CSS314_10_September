@@ -1,0 +1,27 @@
+TECHNICAL ANALYSIS / DEFENSE — Student ID 230103054
+
+Q1: Micro-Architectural Root Cause of False Sharing
+Variant 1 stores per-thread counters next to each other in one small array. On typical x86 CPUs, the cache line size is 64 bytes, so counters belonging to multiple threads can occupy the same cache line. When different cores repeatedly update their own counters, the MESI/MOESI cache-coherence protocol repeatedly invalidates and transfers ownership of that cache line between cores. This creates additional coherence and bus traffic even though the threads are logically modifying different array elements.
+In my measurement, the false-sharing implementation took 0.999500 s, while the reduction implementation took 0.946000 s. The penalty ratio was 1.0566x, meaning the false-sharing version was approximately 5.7% slower.
+
+Q2: Hyperthreading (SMT) Saturation & Physical Core Ceilings
+Speedup did not continue to scale linearly after reaching the physical-core count. SMT threads share several hardware resources inside the CPU, including front-end/decode bandwidth, execution units, caches, load/store resources, and memory bandwidth.
+On my machine, the measured speedup was 4.490x at 14 physical cores and 4.367x at 20 logical threads. This represents a small performance decrease of about 2.7%. Therefore, adding logical threads did not provide additional scaling because shared hardware resources had already become saturated.
+
+Q3: Empirical vs. Theoretical Amdahl Discrepancy
+The derived parallel fraction from the k=2 measurement is:
+p = 0.082731
+Amdahl's Law assumes an idealized fixed serial fraction and does not include many real hardware costs. As the thread count increased, the empirical and theoretical curves diverged because of synchronization and barrier overhead, cache-coherence traffic, memory-bandwidth pressure, SMT resource contention, and workload imbalance.
+Two important physical factors omitted by the basic Amdahl equation and observed in this lab are cache-coherence/false-sharing effects and non-uniform workload distribution combined with scheduling overhead.
+
+Q4: The Scheduling Trade-Off Dilemma
+The measured scheduling times were:
+
+schedule(static): 0.838000 s
+schedule(static, 1000): 0.438500 s
+schedule(dynamic, 100): 0.999000 s
+schedule(dynamic, 10000): 0.943000 s
+schedule(guided): 0.995500 s
+
+The fastest scheduling method on my machine was schedule(static, 1000), with an execution time of 0.438500 s.
+The fine-grained dynamic(100) configuration created many queue and scheduling operations, causing higher runtime overhead. dynamic(10000) reduced this overhead by using larger chunks, but it was less responsive to workload imbalance. Static scheduling has lower scheduling overhead but may leave some threads waiting when Collatz workloads are uneven. Guided scheduling attempts to balance these effects by starting with large chunks and gradually reducing their size.
