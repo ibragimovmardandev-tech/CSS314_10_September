@@ -1,0 +1,13 @@
+TASK 3 - Prefix Scan (Step Efficiency vs. Work Efficiency)
+Student ID: 230103054
+Array size: 2,000,000 integers (values 1..10)
+Parallel worker processes: 4
+Algorithm: serial inclusive prefix / parallel 2-pass chunked scan
+Serial Time (ms): 145.785
+Parallel Time (ms): 97.486
+Speedup (Serial / Parallel): 1.495x
+Serial output[-1]: 10998595
+Parallel output[-1]: 10998595
+Verification Status: PASS
+Note: wall-clock scan computation; data generation and worker startup excluded.
+Note: verification checks both last element (assert) and entire output array.
