@@ -1,0 +1,17 @@
+TASK 2 - Pseudo-Random Generator State Bottleneck
+Student ID: 230103054
+Sample points per mode: 40,000,000
+Thread count: 4
+PRNG: SplitMix64
+Shared PRNG: one generator, mutex around each pair of draws
+Shared PRNG: Computed pi = 3.1416774000
+Shared PRNG: Absolute error from Math.PI = 0.0000847464
+Shared PRNG: Wall time = 1186.248 ms
+Shared PRNG: Points inside circle = 31416774
+Independent PRNG: seed = Student_ID * 10 + thread_index (0..3)
+Independent PRNG: Computed pi = 3.1419055000
+Independent PRNG: Absolute error from Math.PI = 0.0003128464
+Independent PRNG: Wall time = 98.121 ms
+Independent PRNG: Points inside circle = 31419055
+Speedup factor (shared / independent): 12.090x
+Method: Four real OS threads in both modes; wall-clock includes thread startup and join.
