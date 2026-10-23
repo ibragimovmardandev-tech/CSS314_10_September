@@ -1,0 +1,22 @@
+TASK 4 - Host-to-Process Transfer Penalty (CPU / IPC)
+Student ID: 230103054
+Environment: CPU, Python multiprocessing (standard library)
+Element type: signed 64-bit integers (8 bytes each)
+Path A: Pickle serialization over multiprocessing.Pipe (2 MiB chunks)
+Path B: multiprocessing.shared_memory (zero-copy worker access)
+Runs per path and size: 3 (median reported)
+Timing: parent send/notify through worker acknowledgement; worker pre-started
+NOTE: Shared memory allocation and INITIAL COPY are excluded from Path B
+      handoff timing and shown separately as setup/staging cost.
+NOTE: Path A includes chunk slicing, pickle and IPC transfers.
+
+           N | Data (MiB) |   Pipe A (ms) | Shared B (ms) |  A/B ratio | SHM fill (ms)
+-------------------------------------------------------------------------------------------
+     100,000 |       0.76 |         1.847 |         0.177 |     10.43x |         0.418
+   1,000,000 |       7.63 |        14.528 |         0.263 |     55.20x |         3.156
+  10,000,000 |      76.29 |       128.401 |         0.204 |    628.49x |        30.061
+
+Verification Status: PASS (size and three sample values checked for each path)
+Interpretation: Pipe moves serialized data; shared memory passes only a handle.
+The A/B ratio compares handoff costs after the SHM region is populated.
+Saved: C:\Users\Mardan Ibragimov\Downloads\task4_output.txt
